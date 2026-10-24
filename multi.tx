@@ -1,0 +1,98 @@
+
+# Experiment No. 5: Matrix Multiplication Using Hadoop MapReduce
+
+## Aim
+To implement a Matrix Multiplication program using MapReduce in Hadoop.
+
+## Procedure
+
+### Step 1: Install and Configure Java and Hadoop
+Install Java JDK and Apache Hadoop. Configure the required environment variables and Hadoop configuration files.
+
+### Step 2: Start Hadoop Services
+Open Command Prompt and execute:
+
+```cmd
+cd C:\HadoopProject
+start-all.cmd
+```
+
+Wait until the Hadoop services start successfully.
+
+### Step 3: Create the Java Program
+Create a file named `MatrixMultiplication.java` inside the `C:\HadoopProject` directory.
+
+Write the Java MapReduce program that:
+- Accepts two matrices as input.
+- Checks whether matrix multiplication is possible.
+- Uses a Mapper class to generate intermediate key-value pairs.
+- Uses a Reducer class to calculate the product of corresponding matrix elements.
+- Stores input and output data in HDFS.
+- Displays the resultant matrix.
+
+### Step 4: Compile the Java Program
+Execute the following command:
+
+```cmd
+hadoop com.sun.tools.javac.Main MatrixMultiplication.java
+```
+
+### Step 5: Verify the Generated Class Files
+Execute:
+
+```cmd
+dir MatrixMultiplication*.class
+```
+
+Verify that the following class files are generated:
+- `MatrixMultiplication.class`
+- `MatrixMultiplication$MatrixMapper.class`
+- `MatrixMultiplication$MatrixReducer.class`
+
+### Step 6: Create the JAR File
+Execute:
+
+```cmd
+jar cf matrix.jar MatrixMultiplication*.class
+```
+
+This command packages the compiled class files into a JAR file.
+
+### Step 7: Execute the MapReduce Program
+Run the program using:
+
+```cmd
+hadoop jar matrix.jar MatrixMultiplication
+```
+
+### Step 8: Enter the Matrix Dimensions and Elements
+When prompted, enter:
+1. Number of rows of Matrix A.
+2. Number of columns of Matrix A.
+3. Elements of Matrix A.
+4. Number of rows of Matrix B.
+5. Number of columns of Matrix B.
+6. Elements of Matrix B.
+
+Ensure that the number of columns in Matrix A equals the number of rows in Matrix B.
+
+### Step 9: Execute MapReduce Processing
+The program uploads the input data to HDFS and executes the Mapper and Reducer tasks to calculate the matrix product.
+
+### Step 10: Observe the Result
+Observe the resultant matrix displayed on the console after successful execution.
+
+### Step 11: Verify the Output
+Check that the resultant matrix has the expected dimensions and values. If the number of columns of Matrix A does not equal the number of rows of Matrix B, the program displays an error.
+
+## Theory
+Matrix multiplication is an operation in which two compatible matrices are multiplied to produce a resultant matrix. If Matrix A has dimensions m × n and Matrix B has dimensions n × p, the resultant matrix C has dimensions m × p.
+
+Each element of the resultant matrix is calculated as:
+
+C[i][j] = Σ A[i][k] × B[k][j]
+
+In Hadoop MapReduce, the Mapper generates intermediate key-value pairs for each resultant matrix position. The Reducer collects the corresponding elements of both matrices, calculates their dot product, and outputs the result.
+
+## Conclusion
+The matrix multiplication experiment was successfully implemented using Hadoop MapReduce and Java. The program accepted two matrices, verified their compatibility, processed the multiplication through Mapper and Reducer classes, and displayed the resultant matrix. This demonstrated the use of MapReduce for distributed matrix computation.
