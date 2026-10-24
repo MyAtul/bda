@@ -1,3 +1,6 @@
+# Install required libraries (run in terminal / command prompt):
+# pip install networkx matplotlib
+
 import networkx as nx
 import matplotlib.pyplot as plt
 
