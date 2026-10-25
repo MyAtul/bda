@@ -1,34 +1,28 @@
-import hashlib
+size = 10
+bit_array = [0] * size
 
-class BloomFilter:
-    def __init__(self, size=20, k=3):
-        self.size, self.k = size, k
-        self.bits = [0] * size
+def hash1(x):
+    return (2*x*x + 3*x + 1) % size
 
-    def hashes(self, n):
-        return [int(hashlib.sha256(f"{n}{i}".encode()).hexdigest(), 16) % self.size for i in range(self.k)]
+def hash2(x):
+    return (x*x*x + 2*x + 4) % size
 
-    def add(self, n):
-        for i in self.hashes(n):
-            self.bits[i] = 1
+def add(x):
+    bit_array[hash1(x)] = 1
+    bit_array[hash2(x)] = 1
 
-    def check(self, n):
-        return all(self.bits[i] for i in self.hashes(n))
+def check(x):
+    if bit_array[hash1(x)] and bit_array[hash2(x)]:
+        print(x, "may be present")
+    else:
+        print(x, "is definitely not present")
 
+numbers = [10, 20, 30,40,50,1,3]
+for x in numbers:
+    add(x)
 
-bloom = BloomFilter()
-numbers = [10, 20, 30, 40, 50, 60]
+print("Bit array:", bit_array)
 
-for n in numbers:
-    bloom.add(n)
-
-print("Hash Positions:")
-for n in numbers:
-    print(n, "->", bloom.hashes(n))
-
-print("Index:", list(range(20)))
-print("Bit Array:", bloom.bits)
-
-search = int(input("Enter number to search: "))
-print("Hash Positions:", bloom.hashes(search))
-print("Result:", "Possibly Present" if bloom.check(search) else "Definitely Not Present")
+search = list(map(int, input("Enter numbers to search: ").split()))
+for x in search:
+    check(x)

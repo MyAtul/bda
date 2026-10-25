@@ -1,15 +1,23 @@
-import hashlib
+def hash1(x):
+    return (5*x + 3) % 16
 
-data = list(map(int, input("Enter numbers: ").split()))
-R = 0
+def trailing_zero(n):
+    if n == 0:
+        return 4
+    count = 0
+    while n % 2 == 0:
+        count += 1
+        n //= 2
+    return count
 
-for n in set(data):
-    h = int(hashlib.md5(str(n).encode()).hexdigest(), 16)
-    b = bin(h)[2:]
-    z = len(b) - len(b.rstrip('0'))
-    R = max(R, z)
+data = list(map(int, input("Enter stream: ").split()))
 
-print("Dataset:", data)
-print("Exact distinct count:", len(set(data)))
-print("Maximum trailing zeros (R):", R)
-print("Estimated distinct count:", round(2**R / 0.77351))
+hash_values = [hash1(i) for i in data]
+binary = [bin(i)[2:] for i in hash_values]
+zero = [trailing_zero(i) for i in hash_values]
+
+print("Hash values:", hash_values)
+print("Binary values:", binary)
+print("Trailing zeros:", zero)
+print("Actual Distinct Elements:", len(set(data)))
+print("Estimated Unique Elements:", 2 ** max(zero))
